@@ -1,8 +1,8 @@
 # TCC
 Repositório dedicado a códigos desenvolvidos para a monografia
 
-#Titulo
+# Titulo
 
-#Objetivo
+# Objetivo
 
-#Tecnologias utilizadas
+# Tecnologias utilizadas

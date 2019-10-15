@@ -1,5 +1,5 @@
 # TCC | Sistemas de Informação - Unimontes
-Repositório dedicado a códigos desenvolvidos para minha monografia
+Códigos desenvolvidos para minha monografia.
 
 # Titulo
 

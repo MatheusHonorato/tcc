@@ -1,0 +1,987 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{tcc\_matheus\_honorato\_avaliacao\_docente\_modelo\_ead}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \subsection{\# Avaliação docente em
+fuzzy}\label{avaliauxe7uxe3o-docente-em-fuzzy}
+
+\subsubsection{Autor: Matheus Felipe Paixão
+Honorato}\label{autor-matheus-felipe-paixuxe3o-honorato}
+
+matheuspaixaohonorato@gmail.com \#\#\# Sistema desenvolvido para
+trabalho de conclusão de curso - Sistemas de Informação \textbar{}
+Unimontes \#\#\# Objetivo: avaliar docentes do centro de educação a
+distância da Unimontes por meio da lógica fuzzy
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{}Importando biblioteca para operações com listas }
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        
+        \PY{c+c1}{\PYZsh{}Importanto biblioteca para gerar gráficos}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        
+        \PY{c+c1}{\PYZsh{}alterando o tamanho padrão das legendas dos gráficos}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{rcParams}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{font.size}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{18}\PY{p}{\PYZcb{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{}passo utilizado para gerar universo de discurso dos conjuntos que compoem as variáveis de entrada}
+        
+        \PY{n}{passo} \PY{o}{=} \PY{l+m+mf}{0.001}
+        
+        \PY{c+c1}{\PYZsh{}os parâmetros utilizados definem as funcões de pertinência}
+        
+        \PY{c+c1}{\PYZsh{}funcões triangulares para todas as variáveis de entrada}
+        
+        \PY{c+c1}{\PYZsh{}cada linha determina uma função}
+        
+        \PY{n}{variaveis\PYZus{}de\PYZus{}entrada} \PY{o}{=} \PY{p}{[}
+            \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{3.5}\PY{p}{]}\PY{p}{,} 
+            \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mf}{3.5}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{l+m+mf}{3.5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]} 
+        \PY{p}{]}
+        
+        \PY{n}{variavel\PYZus{}de\PYZus{}saida} \PY{o}{=} \PY{p}{[}
+            \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mf}{3.5}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mf}{3.5}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{l+m+mf}{3.5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]}
+        \PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{}base de regras}
+        
+        \PY{c+c1}{\PYZsh{}constantes entradas}
+        
+        \PY{n}{BAIXO} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{baixo}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{MEDIO} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{medio}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{ALTO} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alto}\PY{l+s+s1}{\PYZsq{}}
+        
+        \PY{c+c1}{\PYZsh{}constantes saída}
+        
+        \PY{n}{BAIXA} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{baixa}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{MEDIA} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{media}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{ALTA} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alta}\PY{l+s+s1}{\PYZsq{}}
+        
+        \PY{c+c1}{\PYZsh{}antecedente, antecedente, antecedente, antecedente, consequente}
+        \PY{c+c1}{\PYZsh{}cada coluna é uma questao ex: col1 = questao\PYZus{}um, col2 = questao\PYZus{}dois \PYZhy{} obs: última coluna igual consequente}
+        
+        \PY{n}{regras\PYZus{}da\PYZus{}dimensao\PYZus{}video\PYZus{}aulas} \PY{o}{=} \PY{p}{[}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}
+        \PY{p}{]}
+        
+        \PY{n}{regras\PYZus{}da\PYZus{}dimensao\PYZus{}atividades\PYZus{}colaborativas} \PY{o}{=} \PY{p}{[}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}
+        \PY{p}{]}
+        
+        \PY{n}{regras\PYZus{}da\PYZus{}dimensao\PYZus{}atividade\PYZus{}individual} \PY{o}{=} \PY{p}{[}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}
+            
+        \PY{p}{]}
+        
+        \PY{n}{regras\PYZus{}da\PYZus{}dimensao\PYZus{}foruns\PYZus{}de\PYZus{}discussao} \PY{o}{=} \PY{p}{[}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}
+        
+        \PY{p}{]}
+        
+        \PY{n}{regras\PYZus{}da\PYZus{}dimensao\PYZus{}webinars} \PY{o}{=} \PY{p}{[}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}
+            
+        \PY{p}{]}
+        
+        \PY{n}{regras\PYZus{}da\PYZus{}dimensao\PYZus{}avaliacoes\PYZus{}presenciais} \PY{o}{=} \PY{p}{[}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{ALTO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            
+            \PY{p}{[}\PY{n}{ALTO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{]}
+        \PY{p}{]}
+        
+        \PY{n}{regras\PYZus{}da\PYZus{}dimensao\PYZus{}salas\PYZus{}virtuais} \PY{o}{=} \PY{p}{[}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{n}{BAIXO}\PY{p}{,} \PY{n}{BAIXO}\PY{p}{,} \PY{n}{MEDIO}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{,} \PY{n}{MEDIA}\PY{p}{,} \PY{n}{BAIXA}\PY{p}{]}
+        \PY{p}{]}
+        
+        \PY{c+c1}{\PYZsh{}cada coluna é a entrada de uma variável }
+        
+        \PY{n}{valores\PYZus{}de\PYZus{}entrada\PYZus{}questoes\PYZus{}dimensao\PYZus{}video\PYZus{}aulas} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{3.9610}\PY{p}{,} \PY{l+m+mf}{3.8312}\PY{p}{,} \PY{l+m+mf}{3.6679}\PY{p}{,} \PY{l+m+mf}{3.6479}\PY{p}{]} 
+        \PY{n}{valores\PYZus{}de\PYZus{}entrada\PYZus{}questoes\PYZus{}dimensao\PYZus{}atividades\PYZus{}colaborativas} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{3.9109}\PY{p}{,} \PY{l+m+mf}{3.2968}\PY{p}{,} \PY{l+m+mf}{3.7254}\PY{p}{,} \PY{l+m+mf}{3.5788}\PY{p}{]} 
+        \PY{n}{valores\PYZus{}de\PYZus{}entrada\PYZus{}questoes\PYZus{}dimensao\PYZus{}atividade\PYZus{}individual} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{3.8182}\PY{p}{,} \PY{l+m+mf}{3.5937}\PY{p}{,} \PY{l+m+mf}{3.8126}\PY{p}{,} \PY{l+m+mf}{3.6531}\PY{p}{]} 
+        \PY{n}{valores\PYZus{}de\PYZus{}entrada\PYZus{}questoes\PYZus{}dimensao\PYZus{}foruns\PYZus{}de\PYZus{}discussao} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{3.6549}\PY{p}{,} \PY{l+m+mf}{3.5584}\PY{p}{,} \PY{l+m+mf}{3.5955}\PY{p}{,} \PY{l+m+mf}{3.5306}\PY{p}{]} 
+        \PY{n}{valores\PYZus{}de\PYZus{}entrada\PYZus{}questoes\PYZus{}dimensao\PYZus{}webinars} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{3.5158}\PY{p}{,} \PY{l+m+mf}{3.3840}\PY{p}{,} \PY{l+m+mf}{3.6419}\PY{p}{,} \PY{l+m+mf}{3.6679}\PY{p}{]} 
+        \PY{n}{valores\PYZus{}de\PYZus{}entrada\PYZus{}questoes\PYZus{}dimensao\PYZus{}avaliacoes\PYZus{}presenciais} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{3.6401}\PY{p}{,} \PY{l+m+mf}{3.7829}\PY{p}{,} \PY{l+m+mf}{3.5918}\PY{p}{,} \PY{l+m+mf}{3.5993}\PY{p}{]} 
+        \PY{n}{valores\PYZus{}de\PYZus{}entrada\PYZus{}questoes\PYZus{}dimensao\PYZus{}salas\PYZus{}virtuais} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{3.6939}\PY{p}{,} \PY{l+m+mf}{3.6419}\PY{p}{,} \PY{l+m+mf}{3.5937}\PY{p}{,} \PY{l+m+mf}{3.6271}\PY{p}{,} \PY{l+m+mf}{3.8219}\PY{p}{,} \PY{l+m+mf}{3.7477}\PY{p}{]}          
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k}{def} \PY{n+nf}{retornar\PYZus{}parametros\PYZus{}que\PYZus{}definem\PYZus{}funcao}\PY{p}{(}\PY{n}{variavel}\PY{p}{,} \PY{n}{funcao}\PY{p}{)}\PY{p}{:}
+            
+            \PY{k}{if}\PY{p}{(}\PY{n}{variavel}\PY{o}{==}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entrada}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                \PY{k}{if}\PY{p}{(}\PY{n}{funcao}\PY{o}{==}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{baixo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{return} \PY{n}{variaveis\PYZus{}de\PYZus{}entrada}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                \PY{k}{if}\PY{p}{(}\PY{n}{funcao}\PY{o}{==}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{medio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{return} \PY{n}{variaveis\PYZus{}de\PYZus{}entrada}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                \PY{k}{if}\PY{p}{(}\PY{n}{funcao}\PY{o}{==}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{return} \PY{n}{variaveis\PYZus{}de\PYZus{}entrada}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+            \PY{k}{if}\PY{p}{(}\PY{n}{variavel}\PY{o}{==}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{saida}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                \PY{k}{if}\PY{p}{(}\PY{n}{funcao}\PY{o}{==}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{baixa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{return} \PY{n}{variavel\PYZus{}de\PYZus{}saida}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                \PY{k}{if}\PY{p}{(}\PY{n}{funcao}\PY{o}{==}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{media}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{return} \PY{n}{variavel\PYZus{}de\PYZus{}saida}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+                \PY{k}{if}\PY{p}{(}\PY{n}{funcao}\PY{o}{==}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alta}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{return} \PY{n}{variavel\PYZus{}de\PYZus{}saida}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{}geranado lista de valores eixo x das variáveis de entrada}
+        
+        \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}baixo} \PY{o}{=} \PY{n}{retornar\PYZus{}parametros\PYZus{}que\PYZus{}definem\PYZus{}funcao}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entrada}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{baixo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}medio} \PY{o}{=} \PY{n}{retornar\PYZus{}parametros\PYZus{}que\PYZus{}definem\PYZus{}funcao}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entrada}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{medio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}alto} \PY{o}{=} \PY{n}{retornar\PYZus{}parametros\PYZus{}que\PYZus{}definem\PYZus{}funcao}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entrada}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variaveis\PYZus{}de\PYZus{}entrada\PYZus{}funcao\PYZus{}baixo} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}
+            \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}baixo}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}baixo}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{passo}
+        \PY{p}{)}
+        \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variaveis\PYZus{}de\PYZus{}entrada\PYZus{}funcao\PYZus{}medio} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}
+            \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}medio}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}medio}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{passo}
+        \PY{p}{)}
+        \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variaveis\PYZus{}de\PYZus{}entrada\PYZus{}funcao\PYZus{}alto} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}
+            \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}alto}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}alto}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{passo}
+        \PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}geranado lista de valores eixo x da variável de saída}
+        
+        \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}baixo} \PY{o}{=} \PY{n}{retornar\PYZus{}parametros\PYZus{}que\PYZus{}definem\PYZus{}funcao}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{saida}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{baixa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}medio} \PY{o}{=} \PY{n}{retornar\PYZus{}parametros\PYZus{}que\PYZus{}definem\PYZus{}funcao}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{saida}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{media}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}alto} \PY{o}{=} \PY{n}{retornar\PYZus{}parametros\PYZus{}que\PYZus{}definem\PYZus{}funcao}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{saida}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alta}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}baixo} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}
+            \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}baixo}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}baixo}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{passo}
+        \PY{p}{)}
+        \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}medio} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}
+            \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}medio}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}medio}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{passo}
+        \PY{p}{)}
+        \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}alto} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{arange}\PY{p}{(}
+            \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}alto}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}alto}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,} 
+            \PY{n}{passo}
+        \PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{c+c1}{\PYZsh{}definição da função de pertinência triangular}
+        
+        \PY{k}{def} \PY{n+nf}{triangular}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{parametros}\PY{p}{)}\PY{p}{:}
+            \PY{n}{resultado} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{n}{a} \PY{o}{=} \PY{n}{parametros}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{b} \PY{o}{=} \PY{n}{parametros}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+            \PY{n}{c} \PY{o}{=} \PY{n}{parametros}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+            \PY{n}{valor\PYZus{}minimo} \PY{o}{=} \PY{l+m+mf}{0.0001}
+            \PY{n}{resultado} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{p}{(}\PY{n}{x}\PY{o}{\PYZhy{}}\PY{n}{a}\PY{p}{)}\PY{o}{/}\PY{n+nb}{max}\PY{p}{(}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{a}\PY{p}{,}\PY{n}{valor\PYZus{}minimo}\PY{p}{)}\PY{p}{,}\PY{p}{(}\PY{n}{c}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{n+nb}{max}\PY{p}{(}\PY{n}{c}\PY{o}{\PYZhy{}}\PY{n}{b}\PY{p}{,}\PY{n}{valor\PYZus{}minimo}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}
+            \PY{k}{return} \PY{n}{resultado}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{}definição da função de pertinência triapezoidal}
+        
+        \PY{k}{def} \PY{n+nf}{trapezoidal}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{parametros}\PY{p}{)}\PY{p}{:}
+            \PY{n}{resultado} \PY{o}{=} \PY{l+m+mi}{0}
+            \PY{n}{a} \PY{o}{=} \PY{n}{parametros}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{b} \PY{o}{=} \PY{n}{parametros}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+            \PY{n}{c} \PY{o}{=} \PY{n}{parametros}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}
+            \PY{n}{d} \PY{o}{=} \PY{n}{parametros}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}
+            \PY{n}{valor\PYZus{}minimo} \PY{o}{=} \PY{l+m+mf}{0.0001}
+            \PY{n}{resultado} \PY{o}{=} \PY{n+nb}{max}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{p}{(}\PY{n}{x}\PY{o}{\PYZhy{}}\PY{n}{a}\PY{p}{)}\PY{o}{/}\PY{n+nb}{max}\PY{p}{(}\PY{p}{(}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{a}\PY{p}{)}\PY{p}{,} \PY{n}{valor\PYZus{}minimo}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{,}\PY{p}{(}\PY{n}{d}\PY{o}{\PYZhy{}}\PY{n}{x}\PY{p}{)}\PY{o}{/}\PY{n+nb}{max}\PY{p}{(}\PY{p}{(}\PY{n}{d}\PY{o}{\PYZhy{}}\PY{n}{c}\PY{p}{)}\PY{p}{,} \PY{n}{valor\PYZus{}minimo}\PY{p}{)}\PY{p}{)}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{)}
+            \PY{k}{return} \PY{n}{resultado}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{k}{def} \PY{n+nf}{plotar\PYZus{}grafico}\PY{p}{(}\PY{n}{eixo\PYZus{}x\PYZus{}baixo}\PY{p}{,} \PY{n}{eixo\PYZus{}x\PYZus{}medio}\PY{p}{,} \PY{n}{eixo\PYZus{}x\PYZus{}alto}\PY{p}{,} \PY{n}{parametros\PYZus{}baixo}\PY{p}{,} \PY{n}{parametros\PYZus{}medio}\PY{p}{,} \PY{n}{parametros\PYZus{}alto}\PY{p}{,} \PY{n}{tipo}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{}listas de pertinencias variáveis de entrada }
+        
+            \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}baixo} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}medio} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}alto} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        
+            \PY{c+c1}{\PYZsh{}plotando gráfico variável }
+            
+            \PY{c+c1}{\PYZsh{}definindo dimensões do gráfico}
+            
+            \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+        
+            \PY{c+c1}{\PYZsh{}inserindo valores em listas de pertinência de variáveis }
+            
+            \PY{k}{if}\PY{p}{(}\PY{n}{tipo} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entrada}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                \PY{n}{valor\PYZus{}label\PYZus{}baixo} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Baixo}\PY{l+s+s1}{\PYZsq{}}
+                \PY{n}{valor\PYZus{}label\PYZus{}medio} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Médio}\PY{l+s+s1}{\PYZsq{}}
+                \PY{n}{valor\PYZus{}label\PYZus{}alto} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Alto}\PY{l+s+s1}{\PYZsq{}}
+            
+            \PY{k}{if}\PY{p}{(}\PY{n}{tipo} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{saida}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                \PY{n}{valor\PYZus{}label\PYZus{}baixo} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Baixa}\PY{l+s+s1}{\PYZsq{}}
+                \PY{n}{valor\PYZus{}label\PYZus{}medio} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Média}\PY{l+s+s1}{\PYZsq{}}
+                \PY{n}{valor\PYZus{}label\PYZus{}alto} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Alta}\PY{l+s+s1}{\PYZsq{}}
+        
+            \PY{k}{for} \PY{n}{x\PYZus{}atual} \PY{o+ow}{in} \PY{n}{eixo\PYZus{}x\PYZus{}baixo}\PY{p}{:}
+                \PY{k}{if}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{parametros\PYZus{}baixo}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}baixo}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{triangular}\PY{p}{(}\PY{n}{x\PYZus{}atual}\PY{p}{,} \PY{n}{parametros\PYZus{}baixo}\PY{p}{)}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{parametros\PYZus{}baixo}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}baixo}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{trapezoidal}\PY{p}{(}\PY{n}{x\PYZus{}atual}\PY{p}{,} \PY{n}{parametros\PYZus{}baixo}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{eixo\PYZus{}x\PYZus{}baixo}\PY{p}{,} \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}baixo}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{valor\PYZus{}label\PYZus{}baixo}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{x\PYZus{}atual} \PY{o+ow}{in} \PY{n}{eixo\PYZus{}x\PYZus{}medio}\PY{p}{:}
+                \PY{k}{if}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{parametros\PYZus{}medio}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}medio}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{triangular}\PY{p}{(}\PY{n}{x\PYZus{}atual}\PY{p}{,} \PY{n}{parametros\PYZus{}medio}\PY{p}{)}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{parametros\PYZus{}medio}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}medio}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{trapezoidal}\PY{p}{(}\PY{n}{x\PYZus{}atual}\PY{p}{,} \PY{n}{parametros\PYZus{}medio}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{eixo\PYZus{}x\PYZus{}medio}\PY{p}{,} \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}medio}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{valor\PYZus{}label\PYZus{}medio}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+            
+            \PY{k}{for} \PY{n}{x\PYZus{}atual} \PY{o+ow}{in} \PY{n}{eixo\PYZus{}x\PYZus{}alto}\PY{p}{:}
+                \PY{k}{if}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{parametros\PYZus{}alto}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}alto}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{triangular}\PY{p}{(}\PY{n}{x\PYZus{}atual}\PY{p}{,} \PY{n}{parametros\PYZus{}alto}\PY{p}{)}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{parametros\PYZus{}alto}\PY{p}{)} \PY{o}{==} \PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}alto}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{trapezoidal}\PY{p}{(}\PY{n}{x\PYZus{}atual}\PY{p}{,} \PY{n}{parametros\PYZus{}alto}\PY{p}{)}\PY{p}{)}
+        
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{eixo\PYZus{}x\PYZus{}alto}\PY{p}{,} \PY{n}{valores\PYZus{}eixo\PYZus{}y\PYZus{}variavel\PYZus{}funcao\PYZus{}alto}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{n}{valor\PYZus{}label\PYZus{}alto}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
+            
+            \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{valor}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Pertinência}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{tipo}\PY{p}{)}
+            
+            \PY{n}{nome} \PY{o}{=} \PY{n}{tipo}\PY{o}{+}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.png}\PY{l+s+s1}{\PYZsq{}}
+            
+            \PY{n}{plt}\PY{o}{.}\PY{n}{savefig}\PY{p}{(}\PY{n}{nome}\PY{p}{,} \PY{n+nb}{format}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{png}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k}{def} \PY{n+nf}{gerar\PYZus{}pertinencias\PYZus{}regra}\PY{p}{(}\PY{n}{regra}\PY{p}{,} \PY{n}{entradas}\PY{p}{)}\PY{p}{:}
+            \PY{n}{resultado\PYZus{}regra} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{index}\PY{p}{,} \PY{n}{coluna\PYZus{}atual} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{regra}\PY{p}{)}\PY{p}{:}
+                \PY{k}{if}\PY{p}{(}\PY{n}{coluna\PYZus{}atual} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{baixo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{pertinencia\PYZus{}na\PYZus{}funcao} \PY{o}{=} \PY{n}{triangular}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{,} \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}baixo}\PY{p}{)}
+                    \PY{n}{resultado\PYZus{}regra}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{pertinencia\PYZus{}na\PYZus{}funcao}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{coluna\PYZus{}atual} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{medio}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{pertinencia\PYZus{}na\PYZus{}funcao} \PY{o}{=} \PY{n}{triangular}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{,} \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}medio}\PY{p}{)}
+                    \PY{n}{resultado\PYZus{}regra}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{pertinencia\PYZus{}na\PYZus{}funcao}\PY{p}{)}
+                \PY{k}{if}\PY{p}{(}\PY{n}{coluna\PYZus{}atual} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alto}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{pertinencia\PYZus{}na\PYZus{}funcao} \PY{o}{=} \PY{n}{triangular}\PY{p}{(}\PY{n}{entradas}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{,} \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}alto}\PY{p}{)}
+                    \PY{n}{resultado\PYZus{}regra}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{pertinencia\PYZus{}na\PYZus{}funcao}\PY{p}{)}
+            \PY{k}{return} \PY{n}{resultado\PYZus{}regra}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{k}{def} \PY{n+nf}{gerar\PYZus{}matriz\PYZus{}de\PYZus{}pertinencias\PYZus{}regras}\PY{p}{(}\PY{n}{regras}\PY{p}{,} \PY{n}{entradas}\PY{p}{)}\PY{p}{:}
+            \PY{n}{resultado\PYZus{}regras} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{regra\PYZus{}atual} \PY{o+ow}{in} \PY{n}{regras}\PY{p}{:}
+                \PY{n}{resultado\PYZus{}regra} \PY{o}{=} \PY{n}{gerar\PYZus{}pertinencias\PYZus{}regra}\PY{p}{(}\PY{n}{regra\PYZus{}atual}\PY{p}{,} \PY{n}{entradas}\PY{p}{)}
+                \PY{n}{resultado\PYZus{}regras}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{resultado\PYZus{}regra}\PY{p}{)}
+            \PY{k}{return} \PY{n}{resultado\PYZus{}regras}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{}método de inferencia = mamdani | MIN}
+         \PY{k}{def} \PY{n+nf}{inferencia}\PY{p}{(}\PY{n}{regras}\PY{p}{,} \PY{n}{entradas}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{matriz\PYZus{}de\PYZus{}pertinencias\PYZus{}regras} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{pertinencias\PYZus{}consequente} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{pertinencias\PYZus{}funcao\PYZus{}baixa} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{pertinencias\PYZus{}funcao\PYZus{}media} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{pertinencias\PYZus{}funcao\PYZus{}alta} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{resultado} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             
+             \PY{n}{matriz\PYZus{}de\PYZus{}pertinencias\PYZus{}regras} \PY{o}{=} \PY{n}{gerar\PYZus{}matriz\PYZus{}de\PYZus{}pertinencias\PYZus{}regras}\PY{p}{(}\PY{n}{regras}\PY{p}{,} \PY{n}{entradas}\PY{p}{)}
+                        
+             \PY{k}{for} \PY{n}{linha\PYZus{}atual} \PY{o+ow}{in} \PY{n}{matriz\PYZus{}de\PYZus{}pertinencias\PYZus{}regras}\PY{p}{:}
+                 \PY{n}{pertinencias\PYZus{}consequente}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{linha\PYZus{}atual}\PY{p}{)}\PY{p}{)}
+                         
+             \PY{k}{for} \PY{n}{index}\PY{p}{,} \PY{n}{pertinencia\PYZus{}atual} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{pertinencias\PYZus{}consequente}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{regras}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{baixa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{pertinencias\PYZus{}funcao\PYZus{}baixa}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{pertinencia\PYZus{}atual}\PY{p}{)}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{regras}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{media}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{pertinencias\PYZus{}funcao\PYZus{}media}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{pertinencia\PYZus{}atual}\PY{p}{)}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{regras}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alta}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{pertinencias\PYZus{}funcao\PYZus{}alta}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{pertinencia\PYZus{}atual}\PY{p}{)}
+         
+             \PY{n}{pertinencias\PYZus{}funcao\PYZus{}baixa}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{pertinencias\PYZus{}funcao\PYZus{}media}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{pertinencias\PYZus{}funcao\PYZus{}alta}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+                     
+             \PY{n}{resultado} \PY{o}{=} \PY{p}{[}\PY{n+nb}{max}\PY{p}{(}\PY{n}{pertinencias\PYZus{}funcao\PYZus{}baixa}\PY{p}{)}\PY{p}{,}\PY{n+nb}{max}\PY{p}{(}\PY{n}{pertinencias\PYZus{}funcao\PYZus{}media}\PY{p}{)}\PY{p}{,}\PY{n+nb}{max}\PY{p}{(}\PY{n}{pertinencias\PYZus{}funcao\PYZus{}alta}\PY{p}{)}\PY{p}{]}
+             
+             \PY{k}{return} \PY{n}{resultado}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{c+c1}{\PYZsh{}conferir}
+         \PY{k}{def} \PY{n+nf}{gerar\PYZus{}regiao\PYZus{}resultante}\PY{p}{(}\PY{n}{valores\PYZus{}eixo\PYZus{}y}\PY{p}{)}\PY{p}{:}
+             
+             \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+             
+             \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{valores\PYZus{}eixo\PYZus{}y}\PY{p}{)}
+         
+             \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{valor}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Pertinência}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Região resultante}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k}{def} \PY{n+nf}{defuzzificacao}\PY{p}{(}\PY{n}{eixo\PYZus{}x\PYZus{}baixa}\PY{p}{,} \PY{n}{eixo\PYZus{}x\PYZus{}media}\PY{p}{,} \PY{n}{eixo\PYZus{}x\PYZus{}alta}\PY{p}{,} \PY{n}{valores\PYZus{}y}\PY{p}{)}\PY{p}{:}
+                        
+             \PY{c+c1}{\PYZsh{}método centroide    }
+             \PY{n}{valores\PYZus{}numerador} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n}{valores\PYZus{}denominador} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             
+             \PY{n}{numerador} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{n}{denominador} \PY{o}{=} \PY{l+m+mi}{0}
+             
+             \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{eixo\PYZus{}x\PYZus{}baixa}\PY{p}{:}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{triangular}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}baixo}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{valores\PYZus{}y}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{valores\PYZus{}numerador}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{n}{valores\PYZus{}y}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{valores\PYZus{}denominador}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{valores\PYZus{}y}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+                     
+             \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{eixo\PYZus{}x\PYZus{}media}\PY{p}{:}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{triangular}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}medio}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{valores\PYZus{}y}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{valores\PYZus{}numerador}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{n}{valores\PYZus{}y}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{valores\PYZus{}denominador}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{valores\PYZus{}y}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+             
+             \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{eixo\PYZus{}x\PYZus{}alta}\PY{p}{:}
+                 \PY{k}{if}\PY{p}{(}\PY{n}{triangular}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}alto}\PY{p}{)} \PY{o}{\PYZlt{}}\PY{o}{=} \PY{n}{valores\PYZus{}y}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{valores\PYZus{}numerador}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{n}{valores\PYZus{}y}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{valores\PYZus{}denominador}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{valores\PYZus{}y}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+         
+             \PY{n}{numerador} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{valores\PYZus{}numerador}\PY{p}{)}
+             \PY{n}{denominador} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{valores\PYZus{}denominador}\PY{p}{)}
+                 
+             \PY{k}{if}\PY{p}{(}\PY{n}{denominador} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{:}
+                 \PY{k}{return} \PY{l+m+mi}{0}
+                 
+             \PY{n}{gerar\PYZus{}regiao\PYZus{}resultante}\PY{p}{(}\PY{n}{valores\PYZus{}denominador}\PY{p}{)}
+            
+             \PY{n}{resultado} \PY{o}{=} \PY{n}{numerador}\PY{o}{/}\PY{n}{denominador}
+             
+             \PY{k}{return} \PY{n}{resultado}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{def} \PY{n+nf}{sistema\PYZus{}fuzzzy}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             
+             \PY{c+c1}{\PYZsh{}calculando dimensão videoaulas}
+             \PY{n}{resultado\PYZus{}inferencia\PYZus{}video\PYZus{}aulas} \PY{o}{=} \PY{n}{inferencia}\PY{p}{(}
+                 \PY{n}{regras\PYZus{}da\PYZus{}dimensao\PYZus{}video\PYZus{}aulas}\PY{p}{,} 
+                 \PY{n}{valores\PYZus{}de\PYZus{}entrada\PYZus{}questoes\PYZus{}dimensao\PYZus{}video\PYZus{}aulas}
+             \PY{p}{)}
+             \PY{n}{resultado\PYZus{}sistema\PYZus{}video\PYZus{}aulas} \PY{o}{=} \PY{n}{defuzzificacao}\PY{p}{(}
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}baixo}\PY{p}{,} 
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}medio}\PY{p}{,} 
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}alto}\PY{p}{,} \PY{n}{resultado\PYZus{}inferencia\PYZus{}video\PYZus{}aulas}
+             \PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dimensão videoaulas: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{resultado\PYZus{}sistema\PYZus{}video\PYZus{}aulas}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{}calculando dimensão atividades colaborativas}
+             \PY{n}{resultado\PYZus{}inferencia\PYZus{}atividades\PYZus{}colaborativas} \PY{o}{=} \PY{n}{inferencia}\PY{p}{(}
+                 \PY{n}{regras\PYZus{}da\PYZus{}dimensao\PYZus{}atividades\PYZus{}colaborativas}\PY{p}{,} 
+                 \PY{n}{valores\PYZus{}de\PYZus{}entrada\PYZus{}questoes\PYZus{}dimensao\PYZus{}atividades\PYZus{}colaborativas}\PY{p}{)}
+             \PY{n}{resultado\PYZus{}avaliacao\PYZus{}atividades\PYZus{}colaborativas} \PY{o}{=} \PY{n}{defuzzificacao}\PY{p}{(}
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}baixo}\PY{p}{,} 
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}medio}\PY{p}{,} 
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}alto}\PY{p}{,} \PY{n}{resultado\PYZus{}inferencia\PYZus{}atividades\PYZus{}colaborativas}
+             \PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dimensão atividades colaborativas: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{resultado\PYZus{}avaliacao\PYZus{}atividades\PYZus{}colaborativas}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{}calculando dimensão atividades individuais}
+             \PY{n}{resultado\PYZus{}inferencia\PYZus{}atividade\PYZus{}individual} \PY{o}{=} \PY{n}{inferencia}\PY{p}{(}
+                 \PY{n}{regras\PYZus{}da\PYZus{}dimensao\PYZus{}atividade\PYZus{}individual}\PY{p}{,} 
+                 \PY{n}{valores\PYZus{}de\PYZus{}entrada\PYZus{}questoes\PYZus{}dimensao\PYZus{}atividade\PYZus{}individual}\PY{p}{)}
+             \PY{n}{resultado\PYZus{}avaliacao\PYZus{}atividade\PYZus{}individual} \PY{o}{=} \PY{n}{defuzzificacao}\PY{p}{(}
+                \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}baixo}\PY{p}{,} 
+                \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}medio}\PY{p}{,} 
+                \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}alto}\PY{p}{,} \PY{n}{resultado\PYZus{}inferencia\PYZus{}atividade\PYZus{}individual}
+             \PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dimensão atividade individual: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{resultado\PYZus{}avaliacao\PYZus{}atividade\PYZus{}individual}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{}plotando grafico das variáveis de entrada}
+         \PY{n}{plotar\PYZus{}grafico}\PY{p}{(}
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variaveis\PYZus{}de\PYZus{}entrada\PYZus{}funcao\PYZus{}baixo}\PY{p}{,} 
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variaveis\PYZus{}de\PYZus{}entrada\PYZus{}funcao\PYZus{}medio}\PY{p}{,} 
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variaveis\PYZus{}de\PYZus{}entrada\PYZus{}funcao\PYZus{}alto}\PY{p}{,} 
+                 \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}baixo}\PY{p}{,}
+                 \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}medio}\PY{p}{,} 
+                 \PY{n}{parametros\PYZus{}entrada\PYZus{}funcao\PYZus{}alto}\PY{p}{,}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{entrada}\PY{l+s+s1}{\PYZsq{}}
+             \PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{}plotando grafico das variáveis de saída}
+         \PY{n}{plotar\PYZus{}grafico}\PY{p}{(}
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}baixo}\PY{p}{,} 
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}medio}\PY{p}{,} 
+                 \PY{n}{universo\PYZus{}de\PYZus{}discurso\PYZus{}x\PYZus{}variavel\PYZus{}de\PYZus{}saida\PYZus{}funcao\PYZus{}alto}\PY{p}{,} 
+                 \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}baixo}\PY{p}{,}
+                 \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}medio}\PY{p}{,} 
+                 \PY{n}{parametros\PYZus{}saida\PYZus{}funcao\PYZus{}alto}\PY{p}{,}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{saida}\PY{l+s+s1}{\PYZsq{}}
+             \PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{sistema\PYZus{}fuzzzy}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Dimensão videoaulas:  3.6518727742676664
+Dimensão atividades colaborativas:  3.533873694871285
+Dimensão atividade individual:  3.5506751744279206
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_16_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
